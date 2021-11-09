@@ -40,6 +40,22 @@ $(function () {
         h1: 'rook-white'
     };
 
+    var colunas = [];
+    colunas[0] = 'a';
+    colunas[1] = 'b';
+    colunas[2] = 'c';
+    colunas[3] = 'd';
+    colunas[4] = 'e';
+    colunas[5] = 'f';
+    colunas[6] = 'g';
+    colunas[7] = 'h';
+    
+    var mate = false;
+    var movesKings = {
+        black: {},
+        white: {}
+    }
+
     function newGame() {
         $('.square-board').each(function(){
             var square = $(this);
