@@ -40,6 +40,31 @@ $(function () {
         h1: 'rook-white'
     };
 
+    var colunas = [];
+    colunas[0] = 'a';
+    colunas[1] = 'b';
+    colunas[2] = 'c';
+    colunas[3] = 'd';
+    colunas[4] = 'e';
+    colunas[5] = 'f';
+    colunas[6] = 'g';
+    colunas[7] = 'h';
+    var mate = false;
+    var moveKings = {
+        white: {},
+        black: {}
+    }
+    var movesPecaCheck = {};
+    var checking = false;
+    var checkingLonge = false;
+
+    var jogador = 'white';
+    var vezDo = 'white';
+
+    var clickou = 0;
+    var pecaEscolhida = '';
+    var ultimaCasaEscolhida = '';
+
     function newGame() {
         $('.square-board').each(function(){
             var square = $(this);
