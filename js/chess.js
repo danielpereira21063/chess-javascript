@@ -29,7 +29,7 @@ $(function () {
         f2: 'pawn-white',
         g2: 'pawn-white',
         h2: 'pawn-white',
-        
+
         a1: 'rook-white',
         b1: 'knight-white',
         c1: 'bishop-white',
@@ -65,14 +65,14 @@ $(function () {
     var pecaEscolhida = '';
     var ultimaCasaEscolhida = '';
 
-    $('body').on('click', '.piece', function(){
+    $('body').on('click', '.piece', function () {
         var classe = $(this).attr('class');
         var casa = $(this).parent();
         var casaId = casa.attr('id');
-        
-        if(vezDo == jogador) {
+
+        if (vezDo == jogador) {
             console.log(classe, jogador);
-            if(classe.indexOf(jogador) >= 0) {
+            if (classe.indexOf(jogador) >= 0) {
                 clicou = 1;
                 ultimaCasaEscolhida = casaId;
                 pecaEscolhida = $(this);
@@ -82,11 +82,11 @@ $(function () {
     })
 
     function newGame() {
-        $('.square-board').each(function(){
+        $('.square-board').each(function () {
             var square = $(this);
-            
+
             var sq = square.attr('id');
-            if(objSearchIndex(initialPosition, sq) != null) {
+            if (objSearchIndex(initialPosition, sq) != null) {
                 square.html(`
                 <div class="piece ${initialPosition[sq]}"></div>`);
             }
@@ -99,8 +99,8 @@ $(function () {
         var columns = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
         for (var l = 8; l >= 1; --l) {
             for (var c = 0; c < columns.length; ++c) {
-                var sq = columns[c]+l;
-                var ligthdark = (light == 1 ? 'light': 'dark');
+                var sq = columns[c] + l;
+                var ligthdark = (light == 1 ? 'light' : 'dark');
                 $('.board').append(`<div class="square-board ${ligthdark}" id="${sq}"></div>`);
                 light ^= 1;
             }
@@ -109,31 +109,67 @@ $(function () {
     }
 
     var vaiPara = '';
-    $('body').on('click','.square-board', function(){
+    $('body').on('click', '.square-board', function () {
         var temPeca = $(this).find('.piece').size();
         var idCasa = $(this).attr('id');
 
-        // var movimentosPossiveis = varifyPiece(pecaEscolhida, ultimaCasaEscolhida);
-        // $.each(movimentosPossiveis, function(i, sqr){
-        //     $('#'+sqr).addClass('possible');
-        // })
+       var movimentosPossiveis = verifyPiece(pecaEscolhida, ultimaCasaEscolhida);
 
-        if(idCasa != ultimaCasaEscolhida) {
+        $.each(movimentosPossiveis, function (i, sqr) {
+            $('#' + sqr).addClass('possible');
+        })
+
+        if (idCasa != ultimaCasaEscolhida) {
             vaiPara = idCasa;
             alert(vaiPara);
-            if(objSearch(movimentosPossiveis, idCasa) != null) {
-                if(mate == false) {
+            if (objSearch(movimentosPossiveis, idCasa) != null) {
+                if (mate == false) {
                     // jogar($(this));
                 } else {
-                    alert('checkMate'); 
+                    alert('checkMate');
                 }
             } else {
                 alert('Jogada inválida');
             }
         }
     });
-    function varifyPiece(piece, square) {
 
+    function verifyPiece(piece, square) {
+        var tipo = piece.attr('class');
+        var possibleMoves = {};
+
+        if (tipo == 'piece pawn-black') {
+            possibleMoves = findMovesPawn(square, 'black');
+        } else if ('piece pawn-white') {
+            possibleMoves = findMovesPawn(square, 'white');
+        }
+    }
+
+    function findMovesPawn(square, tipo) {
+        var line = Number(square[1]);
+        var column = square[0];
+        var linha = line+1;
+        alert(linha);
+        var moves = {};
+        var x = 0;
+
+        if (tipo == 'white') {
+            if (line == 2) {
+                for (var i = 0; i < 2; i++) {
+                    var casa = $('#'+column+(linha++));
+                    if(casa.find('.piece').size() == 0) {
+                        x++;
+                        moves[x] = casa.attr('id');
+                    } else {
+                        break;
+                    }
+                }
+            }
+        } else {
+            alert('Achar movimentos para o dark')
+        }
+
+        return moves;
     }
 
     printBoard();
