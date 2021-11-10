@@ -143,6 +143,7 @@ $(function () {
         } else if ('piece pawn-white') {
             possibleMoves = findMovesPawn(square, 'white');
         }
+        return possibleMoves;
     }
 
     function findMovesPawn(square, tipo) {
