@@ -61,9 +61,25 @@ $(function () {
     var jogador = 'white';
     var vezDo = 'white';
 
-    var clickou = 0;
+    var clicou = 0;
     var pecaEscolhida = '';
     var ultimaCasaEscolhida = '';
+
+    $('body').on('click', '.piece', function(){
+        var classe = $(this).attr('class');
+        var casa = $(this).parent();
+        var casaId = casa.attr('id');
+        
+        if(vezDo == jogador) {
+            console.log(classe, jogador);
+            if(classe.indexOf(jogador) >= 0) {
+                clicou = 1;
+                ultimaCasaEscolhida = casaId;
+                pecaEscolhida = $(this);
+                $('.square-board').removeClass('possible');
+            }
+        }
+    })
 
     function newGame() {
         $('.square-board').each(function(){
@@ -90,6 +106,34 @@ $(function () {
             }
             light ^= 1;
         }
+    }
+
+    var vaiPara = '';
+    $('body').on('click','.square-board', function(){
+        var temPeca = $(this).find('.piece').size();
+        var idCasa = $(this).attr('id');
+
+        // var movimentosPossiveis = varifyPiece(pecaEscolhida, ultimaCasaEscolhida);
+        // $.each(movimentosPossiveis, function(i, sqr){
+        //     $('#'+sqr).addClass('possible');
+        // })
+
+        if(idCasa != ultimaCasaEscolhida) {
+            vaiPara = idCasa;
+            alert(vaiPara);
+            if(objSearch(movimentosPossiveis, idCasa) != null) {
+                if(mate == false) {
+                    // jogar($(this));
+                } else {
+                    alert('checkMate'); 
+                }
+            } else {
+                alert('Jogada inválida');
+            }
+        }
+    });
+    function varifyPiece(piece, square) {
+
     }
 
     printBoard();
