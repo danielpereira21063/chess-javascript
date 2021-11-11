@@ -25,16 +25,27 @@ body{background:#eee;}
 
 .board .square-board{
 	float:left;
+	position: relative;
 	width:64px;
 	height:64px;
 }
 .dark{background:#86a665;}
 .light{background:#EAE9D2;}
 
-.square-board.possible {
-	transition: all .3s;
-	background: #347064;
+.square-board .possible {
+	transition: background 0.5s ease;
+	position: absolute;
+    padding: -18px;
+    top: 15px;
+    left: 22px;
+    bottom: 15px;
+    right: 0px;
+    background: black;
+    width: 20px;
+    border-radius: 100%;
 }
+
+
 .box .stats{
 	float:right;
 	width:300px;

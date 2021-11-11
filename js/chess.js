@@ -77,6 +77,7 @@ $(function () {
                 ultimaCasaEscolhida = casaId;
                 pecaEscolhida = $(this);
                 $('.square-board').removeClass('possible');
+                $('.spanPossivel').removeClass('possible');
             }
         }
     })
@@ -101,7 +102,9 @@ $(function () {
             for (var c = 0; c < columns.length; ++c) {
                 var sq = columns[c] + l;
                 var ligthdark = (light == 1 ? 'light' : 'dark');
-                $('.board').append(`<div class="square-board ${ligthdark}" id="${sq}"></div>`);
+                $('.board').append(`
+                <div class="square-board ${ligthdark}" id="${sq}">
+                </div>`);
                 light ^= 1;
             }
             light ^= 1;
@@ -116,7 +119,8 @@ $(function () {
        var movimentosPossiveis = verifyPiece(pecaEscolhida, ultimaCasaEscolhida);
 
         $.each(movimentosPossiveis, function (i, sqr) {
-            $('#' + sqr).addClass('possible');
+            // $('#' + sqr).addClass('possible');
+            $('#' + sqr).append('<span class="spanPossivel possible"></span>');
         })
 
         if (idCasa != ultimaCasaEscolhida) {
@@ -150,7 +154,6 @@ $(function () {
         var line = Number(square[1]);
         var column = square[0];
         var linha = line+1;
-        alert(linha);
         var moves = {};
         var x = 0;
 
